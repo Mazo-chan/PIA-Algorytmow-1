@@ -20,11 +20,15 @@ class DataIn{
         }
         
         bool operator<(const DataIn& other) const {
-            return _score < other._score;
+            if(_score < other._score) return true;
+            else if(_score == other._score) return _title < other._title;
+            return false;
         }
 
         bool operator>(const DataIn& other) const {
-            return _score > other._score;
+            if(_score > other._score) return true;
+            else if(_score == other._score) return _title > other._title;
+            return false;
         }
 };
 

@@ -201,32 +201,80 @@ void array_list<T>::merge_sort(){
     }
 }
 template <typename T>
-void array_list<T>::heapify(int index, int heap_size){
+void array_list<T>::heapify(int index, int left, int right){
     int largest = index;
-    int left = 2 * index + 1;
-    int right = 2 * index + 2;
+    int leftChild = 2 * (index - left) + 1 + left;
+    int rightChild = 2 * (index - left) + 2 + left;
 
-    if(left < heap_size && _arr[left] > _arr[largest]) largest = left;
-    if(right < heap_size && _arr[right] > _arr[largest]) largest = right;
+    if(leftChild < right && _arr[leftChild] > _arr[largest]) largest = leftChild;
+    if(rightChild < right && _arr[rightChild] > _arr[largest]) largest = rightChild;
 
     if(largest != index){
         std::swap(_arr[index], _arr[largest]);
-        heapify(largest, heap_size);
+        heapify(largest, left, right);
     }
 }
 template <typename T>
-void array_list<T>::heap_sort(){
-    // Implementacja heap sort dla array_list
+void array_list<T>::heap_sort(int left, int right){
+    // Implementacja heap sort dla array_list na zakresie [left, right)
+    if(right - left <= 1) return;
+    
     // Tworzymy kopiec maksymalny
-    for(int i = _size / 2 - 1; i >= 0; i--){
-        heapify(i, _size);
+    int heap_size = right - left;
+    for(int i = left + heap_size / 2 - 1; i >= left; i--){
+        heapify(i, left, right);
     }
+    
     // Sortujemy elementy
-    for(int i = _size - 1; i > 0; i--){
-        std::swap(_arr[0], _arr[i]);
-        heapify(0, i);
+    for(int i = right - 1; i > left; i--){
+        std::swap(_arr[left], _arr[i]);
+        heapify(left, left, i);
     }
 }
+template <typename T>
+void array_list<T>::intro_sort(int left, int right, int depth_limit){
+    if(right - left <= 1) return;
+    if(depth_limit == 0){
+        heap_sort(left, right);
+        return;
+    }
+    int pivot_index = left + (right - left) / 2;
+    T pivot = _arr[pivot_index];
+    std::swap(_arr[pivot_index], _arr[right - 1]);
+    int store_index = left;
+    for(int i = left; i < right - 1; i++){
+        if(_arr[i] < pivot){
+            std::swap(_arr[i], _arr[store_index]);
+            store_index++;
+        }
+    }
+    std::swap(_arr[store_index], _arr[right - 1]);
+    
+    intro_sort(left, store_index, depth_limit - 1);
+    intro_sort(store_index + 1, right, depth_limit - 1);
+}
+template <>
+void array_list<DataIn>::bucket_sort(int max_value){
+    if(_size == 0) return;
+    array_list<DataIn>* buckets = new array_list<DataIn>[max_value]; //od 1 do 10
+    // std::cout<<"Created buckets "<<std::endl;
+    for(int i = 0; i < _size; i++){
+        buckets[_arr[i]._score - 1].push_back(_arr[i]);
+        }
+    int index = 0;
+    for(int i = 0; i < max_value; i++){
+        if(buckets[i].get_size() > 0){
+            // std::cout<<"Sorting bucket "<<i+1<<" with size "<<buckets[i].get_size()<<std::endl;
+            buckets[i].merge_sort(); // Sortujemy każdy kubełek
+            for(int j = 0; j < buckets[i].get_size(); j++){
+                _arr[index++] = buckets[i]._arr[j];
+            }
+        }
+    }
+    
+    delete[] buckets;
+}
+
 // Explicit template instantiation
 // template class array_list<int>;
 template class array_list<DataIn>;

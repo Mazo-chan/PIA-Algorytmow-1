@@ -37,6 +37,8 @@ class array_list : public IList<T> {
 
         bool check_sorted();
         void merge_sort();
-        void heapify(int index, int heap_size);
-        void heap_sort();
+        void heapify(int index, int left, int right);
+        void heap_sort(int left, int right);
+        void intro_sort(int left, int right, int depth_limit);
+        void bucket_sort(int max_value);
 };
