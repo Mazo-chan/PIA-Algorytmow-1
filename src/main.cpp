@@ -5,7 +5,7 @@
 
 int main() {
     // data_prepare::remove_nan("C:/Users/jakla/Documents/GitHub/PIA-Algorytmow-1/data/projekt1_dane.csv", "C:/Users/jakla/Documents/GitHub/PIA-Algorytmow-1/data/clean_data.csv");
-    int sizes[] = {10000, 100000, 500000, 1000000};
+    int sizes[] = {10000, 50000, 100000, 200000, 500000, 1000000};
     array_list<DataIn> data_list;
     // data_prepare::load_data("C:/Users/jakla/Documents/GitHub/PIA-Algorytmow-1/data/clean_data.csv", data_list, 1000000);
     // data_list.display();
