@@ -47,6 +47,7 @@ int main() {
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         std::cout << "Time taken: " << duration.count() << " ms" << std::endl;
     }
+    data_list.clear();
     // std::cout << data_list.check_sorted() << std::endl;
     std::cin>> std::ws; // Czekamy na wciśnięcie klawisza Enter
     return 0;

@@ -21,7 +21,7 @@ class array_list : public IList<T> {
         void push_front(T value) override;
         void push_back(T value) override;
         void insert(T value, int index) override;
-        // void merge(const array_list& other);
+        void place(T value);
 
         void pop_front() override;
         void pop_back() override;

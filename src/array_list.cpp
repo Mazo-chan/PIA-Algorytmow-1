@@ -111,6 +111,17 @@ void array_list<T>::insert(T value, int index){
     _arr[index] = value;
     _size++;
 }
+template <typename T>
+void array_list<T>::place(T value){
+    if(_size == _capacity) resize(_capacity == 0 ? 1 : _capacity * 2);
+    for(int i = 0; i < _size; i++){
+        if(_arr[i] > value){
+            insert(value, i);
+            return;
+        }
+    }
+    push_back(value);
+}
 // template <typename T>
 // void array_list<T>::merge(const array_list& other){
 //     if(_size + other._size > _capacity) resize(_capacity + other._size > _capacity * 2 ? _capacity + other._size : _capacity * 2);
@@ -259,13 +270,14 @@ void array_list<DataIn>::bucket_sort(int max_value){
     array_list<DataIn>* buckets = new array_list<DataIn>[max_value]; //od 1 do 10
     // std::cout<<"Created buckets "<<std::endl;
     for(int i = 0; i < _size; i++){
-        buckets[_arr[i]._score - 1].push_back(_arr[i]);
+        // buckets[_arr[i]._score - 1].place(_arr[i]);
+        buckets[_arr[i]._score-1].push_back(_arr[i]);
         }
     int index = 0;
     for(int i = 0; i < max_value; i++){
         if(buckets[i].get_size() > 0){
-            // std::cout<<"Sorting bucket "<<i+1<<" with size "<<buckets[i].get_size()<<std::endl;
-            buckets[i].merge_sort(); // Sortujemy każdy kubełek
+            buckets[i].intro_sort(0, buckets[i].get_size(), 2 * std::log2(buckets[i].get_size()));
+            // buckets[i].merge_sort();
             for(int j = 0; j < buckets[i].get_size(); j++){
                 _arr[index++] = buckets[i]._arr[j];
             }
