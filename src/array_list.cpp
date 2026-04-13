@@ -75,8 +75,7 @@ void array_list<int>::display(){
 }
 void array_list<DataIn>::display(){
     for(int i = 0; i < _size; i++){
-        std::cout << "[" << _arr[i]._score << ", " << _arr[i]._title << "] ";
-        (i+1) % 10 == 0 ? std::cout << std::endl : std::cout << "";
+        std::cout << "[" << _arr[i]._score << ", " << _arr[i]._title << "] \n";
     }
     std::cout << std::endl;
 }
