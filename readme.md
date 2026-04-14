@@ -45,7 +45,6 @@ Aby zbudować projekt, wykonaj poniższe kroki w terminalu:
 │   ├── ArrayList.hpp
 │   ├── ArrayList.cpp
 │   ├── Menu.hpp
-│   ├── Menu.cpp
 │   ├── data_prepare.hpp
 │   └── data_prepare.cpp
 ├── data/
